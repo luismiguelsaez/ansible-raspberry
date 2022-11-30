@@ -1,0 +1,7 @@
+---
+
+- name: Bitcoin node bootstrap
+  hosts: bitcoin
+  become: true
+  roles:
+    - bitcoin_node

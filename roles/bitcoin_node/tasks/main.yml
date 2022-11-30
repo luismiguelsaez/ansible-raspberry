@@ -1,0 +1,33 @@
+---
+
+- name: Create directories
+  ansible.builtin.file:
+    path: '{{ item }}'
+    state: directory
+    mode: '0755'
+    owner: '{{ bitcoin_user_name }}'
+    group: '{{ bitcoin_user_group }}'
+  with_items:
+    - '{{ bitcoin_core_dir_install }}'
+
+- name: Download package
+  ansible.builtin.unarchive:
+    src: '{{ bitcoin_core_package }}'
+    dest: '{{ bitcoin_core_dir_install }}'
+    remote_src: True
+    extra_opts:
+      - --transform
+      - s/^bitcoin-[0-9.]*//
+
+- name: Setup daemon on startup
+  ansible.builtin.lineinfile:
+    path: /etc/rc.local
+    line: 'su - {{ bitcoin_user_name }} -c "{{ bitcoin_core_dir_install }}/bin/bitcoind {{ bitcoin_core_daemon_params }}"'
+    insertbefore: '^exit 0$'
+
+- name: Setup logrotate file
+  ansible.builtin.template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/bitcoind
+    backup: True
+    validate: /usr/sbin/logrotate -d %s

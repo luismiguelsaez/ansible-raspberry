@@ -1,0 +1,9 @@
+{{ bitcoin_core_dir_data }}/*.log {
+    maxsize 50M
+    hourly
+    missingok
+    rotate 5
+    compress
+    notifempty
+    nocreate
+}

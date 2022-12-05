@@ -6,4 +6,4 @@ bitcoin_user_group: bitcoin
 bitcoin_core_dir_data: /data/bitcoin
 bitcoin_core_dir_install: /opt/bitcoin
 bitcoin_core_package: 'https://bitcoin.org/bin/bitcoin-core-22.0/bitcoin-22.0-arm-linux-gnueabihf.tar.gz'
-bitcoin_core_daemon_params: '-daemon -datadir=/data/bitcoin'
+bitcoin_core_daemon_params: '-daemon -datadir=/data/bitcoin -dbcache=100 -maxmempool=200 -externalip='

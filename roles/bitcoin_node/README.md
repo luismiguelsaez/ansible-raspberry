@@ -36,3 +36,29 @@ Author Information
 ------------------
 
 An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+
+Bitcoin example commands
+------------------------
+
+- Get blockchain info
+```bash
+/opt/bitcoin/bin/bitcoin-cli -rpcuser=user -rpcpassword=password getblockchaininfo
+```
+
+- Create new wallet
+```bash
+curl http://user:pass@localhost:8332 -d'{"method": "createwallet", "params": ["btcnode"]}' -s
+curl http://user:pass@localhost:8332 -d'{"method": "encryptwallet", "params": ["p4ssphr4s3"]}' -s
+```
+
+- Dump private key
+```bash
+curl http://user:pass@localhost:8332 -d'{"method": "walletpassphrase", "params": ["p4ssphr4s3",120]}' -s
+curl http://user:pass@localhost:8332 -d'{"method": "getnewaddress", "params": ["test"]}' -s
+curl http://user:pass@localhost:8332 -d'{"method": "dumpprivkey", "params": ["public_address"]}' -s
+```
+
+- Backup wallet
+```bash
+curl http://user:pass@localhost:8332 -d'{"method": "backupwallet", "params": ["/tmp/wallet.bck"]}' -s
+```

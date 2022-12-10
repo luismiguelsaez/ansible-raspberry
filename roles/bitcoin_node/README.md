@@ -58,6 +58,13 @@ curl http://user:pass@localhost:8332 -d'{"method": "getnewaddress", "params": ["
 curl http://user:pass@localhost:8332 -d'{"method": "dumpprivkey", "params": ["public_address"]}' -s
 ```
 
+- Get last block
+```bash
+height=$(curl http://user:pass@localhost:8332 -d '{"method":"getblockchaininfo"}' -s | jq -r '.result.blocks')
+block_hash=$(curl http://user:pass@localhost:8332 -d '{"method":"getblockhash","params":['${height}']}' -s | jq -r '.result')
+curl http://user:pass@localhost:8332 -d '{"method":"getblock","params":["'${block_hash}'"]}' -s | jq -r ''
+```
+
 - Backup wallet
 ```bash
 curl http://user:pass@localhost:8332 -d'{"method": "backupwallet", "params": ["/tmp/wallet.bck"]}' -s
